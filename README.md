@@ -58,7 +58,7 @@ File structure:
 
 Supply a dictionary of names and data values.
 Read in the raw data, where data are stored in columns in a text file. 
-Band pass filter the EMG data, and calculate the root-mean-square (RMS) EMG.
+Remove DC offset, band pass filter the EMG data, and calculate the root-mean-square (RMS) EMG.
 
 ```python
 import sys
@@ -69,7 +69,7 @@ import biosig
 channels = {'force':0, 'emg':1, 'distance':2}
 data = biosig.readin.read_data('data.txt', channel=channels)
 emg = data['emg']
-emg = biosig.emg.process.remove_mean(data) # where data is ndarray of EMG data
+emg = biosig.emg.process.remove_mean(emg)
 emg_filt = biosig.emg.process.filter_bandpass(emg, fq=2000, highpass=30, lowpass=500)
 rms_emg = biosig.emg.process.calc_rms(emg, fq=2000, window=50, plot=True) 
 ```
