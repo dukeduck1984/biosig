@@ -79,7 +79,7 @@ def plot_raw(data, details=None, cond_type='raw'):
     plt.close()
     fig = plt.figure()
     plt.plot(data)
-    plt.xlabel('sample')
+    plt.xlabel('Sample')
     plt.ylabel('EMG (a.u.)')
     plt.tight_layout()
     save_plot(details, cond_type)
@@ -116,7 +116,7 @@ def plot_filt(data, data_filt, freq, details=None, cond_type='filt'):
     plt.legend(loc='best')
     axes2 = fig.add_subplot(2, 1, 2)
     axes2.set_ylabel('EMG (a.u.), full')
-    axes2.set_xlabel('sample')
+    axes2.set_xlabel('Sample')
     axes2.plot(data)
     axes2.plot(data_filt)
     plt.locator_params(axis='x', nbins=5)
@@ -130,8 +130,19 @@ def plot_filt(data, data_filt, freq, details=None, cond_type='filt'):
 def plot_powerspec(f, Pxx_den, lowpass, details=None, cond_type='powerspec'):
     """
     Plot power spectrum of data.
+    This function requires a power spectral density analysis is first performed on the recorded signal.
     If testing details are passed, plot is saved in directory for processed data.
     Otherwise plot is saved in local directory.
+
+    Example:
+        import numpy as np
+        import matplotlib.pyplot as plt
+        from scipy import signal
+
+        x = np.random.uniform(-1, 1, size=1000)
+        x = filter_lowpass(x, 1000, 40)
+        f, Pxx_den = signal.welch(x, 1000, nperseg=250)
+        plot_powerspec(f, Pxx_den, lowpass=500, details=None, cond_type='powerspec')
 
     :param f: sample frequencies
     :type f: ndarray
@@ -149,15 +160,65 @@ def plot_powerspec(f, Pxx_den, lowpass, details=None, cond_type='powerspec'):
     plt.clf()
     fig = plt.figure(figsize=(11, 7))
     plt.plot(f, Pxx_den, 'k-o')
-    plt.xlabel('frequency [Hz]')
+    plt.xlabel('Frequency [Hz]')
     plt.ylabel('PSD [V**2/Hz]')
     plt.xlim((1, lowpass / 2))
     plt.ylim(0, Pxx_den.max())  # print(Pxx_den.max())
     plt.locator_params(axis='x', nbins=5)
     plt.locator_params(axis='y', nbins=5)
-    # plt.axis('tight')
     plt.tight_layout()
     save_plot(details, cond_type)
     plt.close()
 
+
+def plot_spectrogram(f, t, Sxx, ylim_ul, xmargin, toffset=0, details=None, cond_type='specgram'):
+    """
+    Plot spectrogram of data.
+    This function requires a spectrogram analysis is first performed on the recorded signal.
+    If testing details are passed, plot is saved in directory for processed data.
+    Otherwise plot is saved in local directory.
+
+    Example:
+        import numpy as np
+        import matplotlib.pyplot as plt
+        from scipy import signal
+
+        x = np.random.uniform(-1, 1, size=1000)
+        x = filter_lowpass(x, 1000, 40)
+        f, t, Sxx = signal.spectrogram(x, fs=1000, window='hamming', nperseg=256)
+        plot_spectrogram(f, t, Sxx, ylim_ul=50, xmargin=2, toffset=2, details=None, cond_type='specgram')
+
+    :param f: sample frequencies
+    :type f: ndarray
+    :param t: segment times
+    :type t: ndarray
+    :param Sxx: spectrogram of x. By default, the last axis of Sxx corresponds to the segment times.
+    :type Sxx: ndarray
+    :param ylim_ul: frequencies upper limit
+    :type ylim_ul: int
+    :param xmargin: time margin between event and upper or lower limit
+    :type xmargin: int
+    :param toffset: time offset from event
+    :type toffset: int
+    :param details: file paths to raw and processed data, subject ID, trial, condition type
+    :type details: dict
+    :param cond_type: condition type
+    :type cond_type: str
+    :return:
+    :rtype:
+    """
+    plt.clf()
+    fig, ax = plt.subplots(1, figsize=(11,7))
+    t = t - toffset
+    p = ax.pcolormesh(t, f, Sxx)
+    fig.colorbar(p)
+    plt.ylim((0, ylim_ul))
+    plt.xlim((t - xmargin, t + xmargin))
+    plt.ylabel('Frequency [Hz]')
+    plt.xlabel('Time [sec]')
+    plt.locator_params(axis='x', nbins=5)
+    plt.locator_params(axis='y', nbins=5)
+    plt.tight_layout()
+    save_plot(details, cond_type)
+    plt.close()
 

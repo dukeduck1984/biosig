@@ -6,7 +6,7 @@ from biosig.plot import \
 
 from biosig.readin import read_data, make_time, read_log, calibrate
 
-from biosig.spectral import find_index, calc_percentpower
+from biosig.spectral import find_index_fband, calc_percentpower, find_index_digital
 
 from biosig.emg import process
 
