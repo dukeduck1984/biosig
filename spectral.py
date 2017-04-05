@@ -97,9 +97,9 @@ def find_index_digital(array, value):
     """
     start_idx, stop_idx = [], []
     for i in range(array.size):
-        if array[i] - array[i - value] == value:
+        if array[i] - array[i - 1] == value:
             start_idx.append(i)
-        if array[i] - array[i - value] == -value:
+        if array[i] - array[i - 1] == -value:
             stop_idx.append(i)
     return start_idx, stop_idx
 

@@ -20,7 +20,7 @@ def filter_lowpass(data, freq, lowpass=30, plot=False):
     high = lowpass/freq
     b, a = signal.butter(4, high, btype='low')
     data_filt = signal.filtfilt(b, a, data)
-    if plot == 'yes':
+    if plot:
         plt.clf()
         plt.close()
         plt.plot(data, label='original')
@@ -43,7 +43,7 @@ def calc_var(data):
     """
     std_dev = np.std(data)
     cv = np.std(data) / np.mean(data)
-    print('Standard deviation (N): {:.3f}'.format(std_dev))
-    print('Coeff of variation: {:.3f}'.format(cv))
+    # print('Standard deviation (N): {:.3f}'.format(std_dev))
+    # print('Coeff of variation: {:.3f}'.format(cv))
     return std_dev, cv
 
