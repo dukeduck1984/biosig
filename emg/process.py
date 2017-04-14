@@ -44,7 +44,8 @@ def filter_bandpass(data, freq, highpass=30, lowpass=500, plot=False):
     :return: filtered data
     :rtype: ndarray
     """
-    high, low = highpass/freq, lowpass/freq
+    freq_nyq = freq/2
+    high, low = highpass/freq_nyq, lowpass/freq_nyq
     b, a = signal.butter(4, [high, low], btype='bandpass')
     data_filt = signal.filtfilt(b, a, data)
     if plot:

@@ -17,7 +17,8 @@ def filter_lowpass(data, freq, lowpass=30, plot=False):
     :return: filtered data
     :rtype: ndarray
     """
-    high = lowpass/freq
+    freq_nyq = freq/2
+    high = lowpass/freq_nyq
     b, a = signal.butter(4, high, btype='low')
     data_filt = signal.filtfilt(b, a, data)
     if plot:
