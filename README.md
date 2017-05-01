@@ -5,7 +5,7 @@ This Python package provides functions to process and plot biological (EMG) and 
 
 This package will be extended over time to include functions to process other types of signals, and improve ease of package installation.
 
-Version 1.0 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.438155.svg)](https://doi.org/10.5281/zenodo.438155) 
+Version 1.1 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.438155.svg)](https://doi.org/10.5281/zenodo.438155) 
 
 ### Citation and license
 
