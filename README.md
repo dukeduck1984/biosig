@@ -17,7 +17,15 @@ This code is released under the GNU General Public License.
 
 ### Installation
 
-Clone or download the `biosig` repository to the local computer, and point Python to the location where `biosig` is stored. For example:
+Clone or download this package and navigate to the root directory of the package, then run:
+
+```bash
+pip install -e . 
+```
+
+where the `-e` flag is short for `--editable` and `.` refers to the current directory. Ie. this line will install the current directory in editable mode. 
+
+Alternatively (although this practice is not preferred [for these reasons](http://python-notes.curiousefficiency.org/en/latest/python_concepts/import_traps.html)), clone or download this package and point Python to the root directory. For example:
 
 ```python
 import sys

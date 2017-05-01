@@ -210,7 +210,7 @@ def plot_spectrogram(f, t, Sxx, ylim_ul, xmargin, toffset=0, details=None, cond_
     plt.clf()
     fig, ax = plt.subplots(1, figsize=(11,7))
     t = t - toffset
-    p = ax.pcolormesh(t, f, Sxx)
+    p = ax.pcolormesh(t, f, Sxx, cmap='RdBu', shading='gouraud')
     fig.colorbar(p)
     plt.ylim((0, ylim_ul))
     plt.xlim((t - xmargin, t + xmargin))
